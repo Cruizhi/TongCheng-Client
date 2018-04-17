@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/top_Red"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:text="@string/detailaddress"
+            android:textColor="@color/text_white"
+            android:textSize="25sp"/>
+
+        <Button
+            android:id="@+id/btn_region_cancel"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/cancel"
+            android:textColor="@drawable/btn_fulltime_cancel"
+            android:background="@color/top_Red"/>
+
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/sp_region_province"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_vertical" />
+
+    <Spinner
+        android:id="@+id/sp_region_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_vertical" />
+
+    <Spinner
+        android:id="@+id/sp_region_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_vertical" />
+
+    <EditText
+        android:id="@+id/et_region_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/detailaddresshint"/>
+
+    <Button
+        android:id="@+id/btn_region_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_white"
+        android:textSize="30sp"
+        android:text="@string/submit"
+        android:background="@color/top_Red"
+        android:layout_margin="20dp"
+        android:layout_gravity="center_vertical" />
+
+
+</LinearLayout>

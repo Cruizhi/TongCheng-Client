@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_Gray">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@mipmap/title_bar">
+
+        <Button
+            android:id="@+id/btn_setting_back"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/back"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            android:background="@drawable/title_btn_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/setting"
+            android:textColor="@color/text_white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_setting_userdetail"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/userdetail"
+        android:drawableLeft="@mipmap/ic_nickname_enable"
+        android:drawableRight="@mipmap/patrol_next_arrow"
+        android:background="@color/text_white"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_Gray" />
+
+    <Button
+        android:id="@+id/btn_setting_usersafety"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/usersafety"
+        android:drawableLeft="@mipmap/ic_pwd_enable"
+        android:drawableRight="@mipmap/patrol_next_arrow"
+        android:background="@color/text_white"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:drawablePadding="10dp" />
+
+    <Button
+        android:id="@+id/btn_setting_cache"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/cache"
+        android:drawableLeft="@mipmap/ic_username_enable"
+        android:drawableRight="@mipmap/patrol_next_arrow"
+        android:background="@color/text_white"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/btn_setting_feedback"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/feedback"
+        android:drawableLeft="@mipmap/ic_vercode_enable"
+        android:drawableRight="@mipmap/patrol_next_arrow"
+        android:background="@color/text_white"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="1dp" />
+
+    <Button
+        android:id="@+id/btn_setting_quitback"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/quitback"
+        android:gravity="center"
+        android:textColor="@color/top_Red"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/text_white"/>
+
+
+</LinearLayout>

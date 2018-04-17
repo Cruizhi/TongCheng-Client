@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="payroll">
+        <item>日结</item>
+        <item>周结</item>
+        <item>月结</item>
+        <item>完工结算</item>
+    </string-array>
+
+    <string-array name="qualifications">
+        <item>小学</item>
+        <item>初中</item>
+        <item>高中</item>
+        <item>专科</item>
+        <item>本科</item>
+        <item>硕士</item>
+        <item>博士</item>
+    </string-array>
+
+    <string-array name="goodstype">
+        <item>美妆护肤</item>
+        <item>数码科技</item>
+        <item>家用电器</item>
+        <item>妈咪宝贝</item>
+        <item>特色美食</item>
+        <item>家用百货</item>
+        <item>服饰内衣</item>
+        <item>其他</item>
+        </string-array>
+</resources>

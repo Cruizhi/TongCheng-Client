@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_Gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/top_Red"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_userdetail_back"
+            android:layout_height="match_parent"
+            android:layout_width="34dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/userdetail"
+            android:textColor="@color/text_white"
+            android:textSize="25sp"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_userdetail_head"
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:background="@color/text_white"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_height="100dp"
+            android:layout_width="100dp"
+            android:text="@string/head"
+            android:textSize="20dp"
+            android:textColor="@color/text_black"
+            android:background="@color/text_white"
+            android:gravity="center_vertical"
+            android:padding="15dp"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="5dp"/>
+
+        <com.example.administrator.widget.RoundImageView
+            android:id="@+id/riv_userdetail_head"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/head_default"
+            android:layout_toLeftOf="@+id/btn_userdetail_next"/>
+
+        <Button
+            android:id="@+id/btn_userdetail_next"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:gravity="start"
+            android:drawableRight="@mipmap/patrol_next_arrow"
+            android:layout_alignParentRight="true"
+            android:background="@color/text_white"
+            android:paddingRight="15dp"/>
+
+        </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_userdetail_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/username"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:drawableRight="@mipmap/patrol_next_arrow"
+        android:background="@color/text_white"/>
+
+    <Button
+        android:id="@+id/btn_userdetail_mygoodsaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/mygoodsaddress"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:drawableRight="@mipmap/patrol_next_arrow"
+        android:background="@color/text_white" />
+
+</LinearLayout>

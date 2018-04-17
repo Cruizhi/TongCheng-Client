@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 按压下的效果 -->
+    <item android:state_pressed="true" android:drawable="@mipmap/pub_icon_car_selected" />
+    <!-- 未按压下的效果 -->
+    <item android:state_enabled="true" android:drawable="@mipmap/pub_icon_car" />
+</selector>
