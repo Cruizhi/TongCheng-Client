@@ -12,8 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.administrator.tongcheng.R;
+import com.example.administrator.ui.activity.SecondRegister;
 import com.mob.MobSDK;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
@@ -21,13 +25,18 @@ import cn.smssdk.SMSSDK;
  * Created by Administrator on 2018/2/7.
  */
 
-public class FirstRegister extends Activity implements View.OnClickListener {
+public class FirstRegister extends Activity{
 
-    private EditText Etphone;  //电话号码
-    private EditText EtverificationCode;  //验证码
-    private Button BtverificationCode;  //获取验证码
-    private Button Btnext;  //下一步
-    private Button Btback;  //返回
+    @BindView(R.id.et_register1_phone)
+    EditText Etphone;  //电话号码
+    @BindView(R.id.et_register1_verification)
+    EditText EtverificationCode;  //验证码
+    @BindView(R.id.btn_register1_verification)
+    Button BtverificationCode;  //获取验证码
+    @BindView(R.id.btn_register1_next)
+    Button Btnext;  //下一步
+    @BindView(R.id.btn_register1_back)
+    Button Btback;  //返回
 
     private String phone;
     private String verificationCode;
@@ -40,7 +49,7 @@ public class FirstRegister extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_register1);
 
         MobSDK.init(this);  //初始化mob
-        init();  //初始化控件
+        ButterKnife.bind(this);
 
         EventHandler eventHandler = new EventHandler(){  //操作回调(开启线程)
             @Override
@@ -55,18 +64,19 @@ public class FirstRegister extends Activity implements View.OnClickListener {
         SMSSDK.registerEventHandler(eventHandler);  //用来往SMSSDK中注册一个事件接收器(注册回调接口)
     }
 
-    private void init(){
-        Etphone = (EditText)findViewById(R.id.et_register1_phone);
-        EtverificationCode = (EditText)findViewById(R.id.et_register1_verification);
-        BtverificationCode = (Button)findViewById(R.id.btn_register1_verification);
-        Btnext = (Button)findViewById(R.id.btn_register1_next);
-        Btback = (Button)findViewById(R.id.btn_register1_back);
-        BtverificationCode.setOnClickListener(this);
-        Btnext.setOnClickListener(this);
-        Btback.setOnClickListener(this);
-    }
+//    private void init(){
+//        Etphone = (EditText)findViewById(R.id.et_register1_phone);
+//        EtverificationCode = (EditText)findViewById(R.id.et_register1_verification);
+//        BtverificationCode = (Button)findViewById(R.id.btn_register1_verification);
+//        Btnext = (Button)findViewById(R.id.btn_register1_next);
+//        Btback = (Button)findViewById(R.id.btn_register1_back);
+//        BtverificationCode.setOnClickListener(this);
+//        Btnext.setOnClickListener(this);
+//        Btback.setOnClickListener(this);
+//    }
 
-    @Override
+//    @Override
+    @OnClick({R.id.btn_register1_verification,R.id.btn_register1_next,R.id.btn_register1_back})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_register1_verification:

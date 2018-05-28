@@ -1,4 +1,4 @@
-package com.example.administrator.activity;
+package com.example.administrator.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,24 +10,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.administrator.activity.Login;
 import com.example.administrator.http.UploadByServlet;
 import com.example.administrator.tongcheng.R;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Administrator on 2018/2/8.
  */
 
-public class SecondRegister extends Activity implements View.OnClickListener{
+public class SecondRegister extends Activity{
 
-    private EditText Etusername;  //用户姓名
-    private EditText Etpassword;  //密码
-    private EditText Etpasswd_confirm;  //确认密码
-    private EditText Etaddress;   //所在地
-    private EditText Etemail;  //邮箱
-    private Button Btback;  //返回
-    private Button Btregister;  //注册按钮Servlet
+    @BindView(R.id.et_register2_username)
+    EditText Etusername;  //用户姓名
+    @BindView(R.id.et_register2_password)
+    EditText Etpassword;  //密码
+    @BindView(R.id.et_register2_password_confirm)
+    EditText Etpasswd_confirm;  //确认密码
+    @BindView(R.id.et_register2_address)
+    EditText Etaddress;   //所在地
+    @BindView(R.id.et_register2_email)
+    EditText Etemail;  //邮箱
+    @BindView(R.id.btn_register2_back)
+    Button Btback;  //返回
+    @BindView(R.id.btn_register2_register)
+    Button Btregister;  //注册按钮Servlet
 
     private String phone;  //电话号码
     private String url = "RegisterServlet";   //服务器地址
@@ -37,23 +49,12 @@ public class SecondRegister extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
 
-        init();  //初始化控件
+        ButterKnife.bind(this);
 
     }
 
-    private void init(){
-        Etusername = (EditText)findViewById(R.id.et_register2_username);
-        Etpassword = (EditText)findViewById(R.id.et_register2_password);
-        Etpasswd_confirm = (EditText)findViewById(R.id.et_register2_password_confirm);
-        Etaddress = (EditText)findViewById(R.id.et_register2_address);
-        Etemail = (EditText)findViewById(R.id.et_register2_email);
-        Btback = (Button)findViewById(R.id.btn_register2_back);
-        Btregister = (Button)findViewById(R.id.btn_register2_register);
-        Btback.setOnClickListener(this);
-        Btregister.setOnClickListener(this);
-    }
-
-    @Override
+//    @Override
+    @OnClick({R.id.btn_register2_register,R.id.btn_register2_back})
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_register2_back:

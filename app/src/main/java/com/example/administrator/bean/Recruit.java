@@ -27,6 +27,30 @@ public class Recruit implements Serializable {
     private String date;
     private String city;
 
+    public Recruit() {
+    }
+
+    public Recruit(String recruittype, String userid, String token, String type, String name, String number, String duration, String period, String wages, String payroll, String address, String welfare, String content, String linkman, String linkphone, String company, String date, String city) {
+        this.recruittype = recruittype;
+        this.userid = userid;
+        this.token = token;
+        this.type = type;
+        this.name = name;
+        this.number = number;
+        this.duration = duration;
+        this.period = period;
+        this.wages = wages;
+        this.payroll = payroll;
+        this.address = address;
+        this.welfare = welfare;
+        this.content = content;
+        this.linkman = linkman;
+        this.linkphone = linkphone;
+        this.company = company;
+        this.date = date;
+        this.city = city;
+    }
+
     public String getRecruittype() {
         return recruittype;
     }

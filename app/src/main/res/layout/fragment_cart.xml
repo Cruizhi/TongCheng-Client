@@ -1,37 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <include
+        layout="@layout/top_cart" />
+
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/ptr_cart_ptrframe"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/top_Red"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:background="#f1f1f1"
+        cube_ptr:ptr_resistance="1.7"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_duration_to_close="300"
+        cube_ptr:ptr_duration_to_close_header="2000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cart"
-            android:textSize="30sp"
-            android:textColor="@color/text_white"
-            android:layout_alignParentLeft="true"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/text_white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/editall"
-            android:textSize="20dp"
-            android:textColor="@color/text_white"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center" />
+            <LinearLayout
+                android:id="@+id/ll_cart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    </RelativeLayout>
+                <ExpandableListView
+                    android:id="@+id/lv_cart_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <!-- -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/bg_Gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cb_cart_all"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:textSize="16sp"
+                        android:background="@null"
+                        android:clickable="true"
+                        android:drawablePadding="10dp"
+                        android:drawableLeft="@drawable/checkbox_bg"
+                        android:text="全部"
+                        android:button="@null"
+                        android:minHeight="64dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_cart_order_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_black"
+                                    android:textSize="18sp"
+                                    android:text="合计："
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginLeft="5dp" />
+
+                                <TextView
+                                    android:id="@+id/tv_cart_total_price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="￥0.00"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/orange" />
+
+                                </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="不含运费" />
+
+                            </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_cart_pay"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="0.5"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_white"
+                            android:background="@color/top_Red"
+                            android:gravity="center"
+                            android:text="结算(0)" />
+
+                        </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_cart_share_info"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_cart_share_goods"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_white"
+                            android:background="@color/orange"
+                            android:gravity="center"
+                            android:text="分享宝贝" />
+
+                        <TextView
+                            android:id="@+id/tv_cart_collect_goods"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginLeft="1dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_white"
+                            android:background="@color/orange"
+                            android:gravity="center"
+                            android:text="移动到收藏夹" />
+
+                        <TextView
+                            android:id="@+id/tv_cart_del"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_white"
+                            android:background="@color/top_Red"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginLeft="1dp"
+                            android:gravity="center"
+                            android:text="删除" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            <include
+                android:id="@+id/layout_cart_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                layout="@layout/fragment_cart_empty" />
+
+        </FrameLayout>
+
+        </in.srain.cube.views.ptr.PtrFrameLayout>
 
 </LinearLayout>

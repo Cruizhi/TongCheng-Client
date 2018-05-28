@@ -1,4 +1,4 @@
-package com.example.administrator.tongcheng;
+package com.example.administrator.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,8 +9,12 @@ import android.widget.TextView;
 
 import com.example.administrator.adapter.CarouselAdapter;
 import com.example.administrator.bean.Goods;
+import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.L;
 import com.jude.rollviewpager.RollPagerView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.example.administrator.http.UploadByServlet.getUrl;
 
@@ -20,12 +24,18 @@ import static com.example.administrator.http.UploadByServlet.getUrl;
 
 public class GoodsSp_F extends Fragment {
 
-    private RollPagerView RpvGoodspic;
-    private TextView TvPrice;
-    private TextView TvContent;
-    private TextView TvCity;
-    private TextView TvCarriage;
-    private TextView TvType;
+    @BindView(R.id.rpv_goods_carousel)
+    RollPagerView RpvGoodspic;
+    @BindView(R.id.tv_goods_price)
+    TextView TvPrice;
+    @BindView(R.id.tv_goods_content)
+    TextView TvContent;
+    @BindView(R.id.tv_goods_city)
+    TextView TvCity;
+    @BindView(R.id.tv_goods_carriage)
+    TextView TvCarriage;
+    @BindView(R.id.tv_goods_type)
+    TextView TvType;
 
     private Goods Thegoods;
     private CarouselAdapter myAdapter  = new CarouselAdapter();
@@ -36,6 +46,7 @@ public class GoodsSp_F extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
         View view = inflater.inflate(R.layout.fragment_goods_sp,container,false);
 
+        ButterKnife.bind(this,view);
         init(view);
         L.i_crz("pics_url"+pic_url[0]+pic_url[1]);
         myAdapter.url(pic_url[0],pic_url[1]);
@@ -44,12 +55,6 @@ public class GoodsSp_F extends Fragment {
     }
 
     private void init(View view){
-        RpvGoodspic = (RollPagerView)view.findViewById(R.id.rpv_goods_carousel);
-        TvPrice = (TextView)view.findViewById(R.id.tv_goods_price);
-        TvContent = (TextView)view.findViewById(R.id.tv_goods_content);
-        TvCity = (TextView)view.findViewById(R.id.tv_goods_city);
-        TvCarriage = (TextView)view.findViewById(R.id.tv_goods_carriage);
-        TvType = (TextView)view.findViewById(R.id.tv_goods_type);
         Bundle bundle = getActivity().getIntent().getExtras();
         Thegoods = (Goods)bundle.getSerializable("GoodsObj");
         TvPrice.setText("￥"+Thegoods.getPrice());

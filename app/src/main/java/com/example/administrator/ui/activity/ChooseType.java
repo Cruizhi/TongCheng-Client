@@ -1,4 +1,4 @@
-package com.example.administrator.activity;
+package com.example.administrator.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.administrator.activity.BusinessRelease;
+import com.example.administrator.activity.FullTimeJob;
+import com.example.administrator.activity.PartTimeJob;
 import com.example.administrator.adapter.TypeAdapter;
 import com.example.administrator.bean.Type;
 import com.example.administrator.tongcheng.R;
@@ -31,6 +34,7 @@ public class ChooseType extends Activity {
 
     private TypeAdapter myAdapter;
     private List<Type> typeList = new ArrayList<Type>();  //初始化list列表
+
 
     private ListView listView;
     private Button BtBack;

@@ -1,4 +1,4 @@
-package com.example.administrator.activity;
+package com.example.administrator.ui.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,37 +6,30 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.administrator.tongcheng.R;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 /**
  * Created by Administrator on 2018/3/4.
  */
 
-public class Setting extends Activity implements View.OnClickListener{
-
-    private Button BtnQuitBack;  //退出登录
-    private Button BtnBack;  //返回
+public class Setting extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        init();
+        ButterKnife.bind(this);
+
     }
 
-    private void init(){
-        BtnQuitBack = (Button)findViewById(R.id.btn_setting_quitback);
-        BtnBack = (Button)findViewById(R.id.btn_setting_back);
-        BtnQuitBack.setOnClickListener(this);
-        BtnBack.setOnClickListener(this);
-    }
-
-    @Override
+//    @Override
+    @OnClick({R.id.btn_setting_back,R.id.btn_setting_quitback})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_setting_back:

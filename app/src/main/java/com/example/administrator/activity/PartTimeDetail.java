@@ -12,25 +12,40 @@ import android.widget.TextView;
 import com.example.administrator.bean.Recruit;
 import com.example.administrator.tongcheng.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 /**
  * Created by Administrator on 2018/4/15.
  */
 
-public class PartTimeDetail extends Activity implements View.OnClickListener {
+public class PartTimeDetail extends Activity{
     private Button BtBack;
-    private TextView TvTitle;
-    private TextView TvWages;
-    private TextView TvDate;
-    private TextView TvAddress;
-    private TextView TvContent;
-    private TextView TvDuration;
-    private TextView TvPeriod;
-    private TextView TvCompany;
-    private TextView TvPayroll;
+    @BindView(R.id.tv_parttimedetail_title)
+    TextView TvTitle;
+    @BindView(R.id.tv_parttimedetail_wages)
+    TextView TvWages;
+    @BindView(R.id.tv_parttimedetail_date)
+    TextView TvDate;
+    @BindView(R.id.tv_parttimedetail_address)
+    TextView TvAddress;
+    @BindView(R.id.tv_parttimedetail_content)
+    TextView TvContent;
+    @BindView(R.id.tv_parttimedetail_duration)
+    TextView TvDuration;
+    @BindView(R.id.tv_parttimedetail_period)
+    TextView TvPeriod;
+    @BindView(R.id.tv_parttimedetail_company)
+    TextView TvCompany;
+    @BindView(R.id.tv_parttimedetail_payroll)
+    TextView TvPayroll;
 
-    private LinearLayout LlPhone,LlChat;
+    @BindView(R.id.ll_recruitdetail_chat)
+    LinearLayout LlChat;
+    @BindView(R.id.ll_recruitdetail_phone)
+    LinearLayout LlPhone;
 
 
     private String userid;
@@ -42,6 +57,7 @@ public class PartTimeDetail extends Activity implements View.OnClickListener {
         super.onCreate(saveIntanceState);
         setContentView(R.layout.activity_parttimedetail);
 
+        ButterKnife.bind(this);
         initRecruit();
         init();
     }
@@ -52,20 +68,6 @@ public class PartTimeDetail extends Activity implements View.OnClickListener {
     }
 
     private void init(){
-        TvTitle = (TextView)findViewById(R.id.tv_parttimedetail_title);
-        TvWages = (TextView)findViewById(R.id.tv_parttimedetail_wages);
-        TvDate = (TextView)findViewById(R.id.tv_parttimedetail_date);
-        TvAddress = (TextView)findViewById(R.id.tv_parttimedetail_address);
-        TvContent = (TextView)findViewById(R.id.tv_parttimedetail_content);
-        TvCompany = (TextView)findViewById(R.id.tv_parttimedetail_company);
-        TvDuration = (TextView)findViewById(R.id.tv_parttimedetail_duration);
-        TvPeriod = (TextView)findViewById(R.id.tv_parttimedetail_period);
-        TvPayroll = (TextView)findViewById(R.id.tv_parttimedetail_payroll);
-
-        LlChat = (LinearLayout) findViewById(R.id.ll_recruitdetail_chat);
-        LlPhone = (LinearLayout) findViewById(R.id.ll_recruitdetail_phone);
-        LlChat.setOnClickListener(this);
-        LlPhone.setOnClickListener(this);
 
         TvTitle.setText(recruit.getName());
         TvWages.setText(recruit.getWages());
@@ -79,7 +81,8 @@ public class PartTimeDetail extends Activity implements View.OnClickListener {
 
     }
 
-    @Override
+//    @Override
+    @OnClick({R.id.ll_recruitdetail_chat,R.id.ll_recruitdetail_phone})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_recruitdetail_chat:

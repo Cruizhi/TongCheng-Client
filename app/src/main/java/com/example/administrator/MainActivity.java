@@ -1,4 +1,4 @@
-package com.example.administrator.tongcheng;
+package com.example.administrator;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -10,6 +10,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.administrator.tongcheng.R;
+import com.example.administrator.ui.fragment.Cart_F;
+import com.example.administrator.ui.fragment.Home_F;
+import com.example.administrator.ui.fragment.Release_F;
+import com.example.administrator.ui.fragment.User_F;
 import com.example.administrator.utils.L;
 
 import io.rong.imkit.RongIM;

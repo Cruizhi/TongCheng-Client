@@ -60,8 +60,9 @@
 
         <EditText
             android:id="@+id/et_login_password"
-            android:layout_width="260dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="6"
             android:layout_marginRight="30dp"
             android:background="@null"
             android:hint="@string/login_passwd"
@@ -72,8 +73,9 @@
 
         <ImageView
             android:id="@+id/iv_login_showpasswd"
-            android:layout_width="30dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:visibility="visible"/>
     </LinearLayout>
 

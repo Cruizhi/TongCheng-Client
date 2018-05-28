@@ -12,24 +12,37 @@ import android.widget.TextView;
 import com.example.administrator.bean.Recruit;
 import com.example.administrator.tongcheng.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 /**
  * Created by Administrator on 2018/4/15.
  */
 
-public class FulltimeDetail extends Activity implements View.OnClickListener{
+public class FulltimeDetail extends Activity{
 
-    private Button BtBack;
-    private TextView TvTitle;
-    private TextView TvWages;
-    private TextView TvDate;
-    private TextView TvRequire;
-    private TextView TvAddress;
-    private TextView TvWelfare;
-    private TextView TvContent;
+    Button BtBack;
+    @BindView(R.id.tv_fulltimedetail_title)
+    TextView TvTitle;
+    @BindView(R.id.tv_fulltimedetail_wages)
+    TextView TvWages;
+    @BindView(R.id.tv_fulltimedetail_date)
+    TextView TvDate;
+    @BindView(R.id.tv_fulltimedetail_require)
+    TextView TvRequire;
+    @BindView(R.id.tv_fulltimedetail_address)
+    TextView TvAddress;
+    @BindView(R.id.tv_fulltimedetail_welfare)
+    TextView TvWelfare;
+    @BindView(R.id.tv_fulltimedetail_content)
+    TextView TvContent;
 
-    private LinearLayout LlPhone,LlChat;
+    @BindView(R.id.ll_recruitdetail_chat)
+    LinearLayout LlChat;
+    @BindView(R.id.ll_recruitdetail_phone)
+    LinearLayout LlPhone;
 
 
     private String userid;
@@ -41,6 +54,7 @@ public class FulltimeDetail extends Activity implements View.OnClickListener{
         super.onCreate(saveIntanceState);
         setContentView(R.layout.activity_fulltimedetail);
 
+        ButterKnife.bind(this);
         initRecruit();
         init();
     }
@@ -51,19 +65,6 @@ public class FulltimeDetail extends Activity implements View.OnClickListener{
     }
 
     private void init(){
-        TvTitle = (TextView)findViewById(R.id.tv_fulltimedetail_title);
-        TvWages = (TextView)findViewById(R.id.tv_fulltimedetail_wages);
-        TvDate = (TextView)findViewById(R.id.tv_fulltimedetail_date);
-        TvRequire = (TextView)findViewById(R.id.tv_fulltimedetail_require);
-        TvAddress = (TextView)findViewById(R.id.tv_fulltimedetail_address);
-        TvWelfare = (TextView)findViewById(R.id.tv_fulltimedetail_welfare);
-        TvContent = (TextView)findViewById(R.id.tv_fulltimedetail_content);
-
-        LlChat = (LinearLayout) findViewById(R.id.ll_recruitdetail_chat);
-        LlPhone = (LinearLayout) findViewById(R.id.ll_recruitdetail_phone);
-        LlChat.setOnClickListener(this);
-        LlPhone.setOnClickListener(this);
-
         TvTitle.setText(recruit.getName());
         TvWages.setText(recruit.getWages());
         TvDate.setText(recruit.getDate());
@@ -74,7 +75,8 @@ public class FulltimeDetail extends Activity implements View.OnClickListener{
 
     }
 
-    @Override
+//    @Override
+    @OnClick({R.id.ll_recruitdetail_chat,R.id.ll_recruitdetail_phone})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_recruitdetail_chat:

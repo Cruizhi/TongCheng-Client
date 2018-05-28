@@ -10,6 +10,9 @@ public class Goods implements Serializable {
 
     private int id;
     private String userid;
+    private String username;
+    private String buyerid;
+    private String buyername;
     private String token;
     private String title;
     private String type;
@@ -27,9 +30,21 @@ public class Goods implements Serializable {
     private String pic4;
     private String pic5;
     private String pic6;
+    private int count = 1;
     private Boolean status;
 
+    private boolean isChoosed;
+    private boolean isEditor;  //自己对该用户所发布的物品进行编辑
+    private boolean ActionBarEditor;  //全局对该用户所有的物品进行编辑
+
     public Goods(){
+        this.status = false;
+    }
+
+    public Goods(String price,String name,String type){
+        this.price = price;
+        this.title = name;
+        this.type = type;
         this.status = false;
     }
 
@@ -43,6 +58,30 @@ public class Goods implements Serializable {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getBuyerid() {
+        return buyerid;
+    }
+
+    public void setBuyerid(String buyerid) {
+        this.buyerid = buyerid;
+    }
+
+    public String getBuyername() {
+        return buyername;
+    }
+
+    public void setBuyername(String buyername) {
+        this.buyername = buyername;
     }
 
     public String getToken() {
@@ -181,11 +220,43 @@ public class Goods implements Serializable {
         this.pic6 = pic6;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public Boolean getStatus() {
         return status;
     }
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public boolean isChoosed() {
+        return isChoosed;
+    }
+
+    public void setChoosed(boolean choosed) {
+        isChoosed = choosed;
+    }
+
+    public boolean isEditor() {
+        return isEditor;
+    }
+
+    public void setEditor(boolean editor) {
+        isEditor = editor;
+    }
+
+    public boolean isActionBarEditor() {
+        return ActionBarEditor;
+    }
+
+    public void setActionBarEditor(boolean actionBarEditor) {
+        ActionBarEditor = actionBarEditor;
     }
 }

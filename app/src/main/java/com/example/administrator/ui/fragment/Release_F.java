@@ -1,4 +1,4 @@
-package com.example.administrator.tongcheng;
+package com.example.administrator.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,21 +9,32 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.administrator.activity.ChooseType;
+import com.example.administrator.ui.activity.ChooseType;
+import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.L;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/2/2.
  */
 
-public class Release_F extends Fragment implements View.OnClickListener{
+public class Release_F extends Fragment{
 
-    private ImageView IvTenement;  //租房按钮
-    private ImageView IvRecruit;  //招聘按钮
-    private ImageView IvCurriculum;  //发布简历按钮
-    private ImageView IvGoods;  //二手物品按钮
-    private ImageView IvCar;  //二手车按钮
-    private ImageView IvPet;  //宠物按钮
+    @BindView(R.id.iv_release_tenement)
+    ImageView IvTenement;  //租房按钮
+    @BindView(R.id.iv_release_recruit)
+    ImageView IvRecruit;  //招聘按钮
+    @BindView(R.id.iv_release_curriculum_vitae)
+    ImageView IvCurriculum;  //发布简历按钮
+    @BindView(R.id.iv_release_goods)
+    ImageView IvGoods;  //二手物品按钮
+    @BindView(R.id.iv_release_car)
+    ImageView IvCar;  //二手车按钮
+    @BindView(R.id.iv_release_pet)
+    ImageView IvPet;  //宠物按钮
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -35,28 +46,14 @@ public class Release_F extends Fragment implements View.OnClickListener{
         view.setLayoutParams(lp);
 
         L.i_crz("Release_F--onCreateView");
-
-        init(view);  //初始化
+        ButterKnife.bind(this,view);
 
         return view;
     }
 
-    private void init(View view){
-        IvTenement = (ImageView)view.findViewById(R.id.iv_release_tenement);
-        IvRecruit = (ImageView)view.findViewById(R.id.iv_release_recruit);
-        IvCurriculum = (ImageView)view.findViewById(R.id.iv_release_curriculum_vitae);
-        IvGoods = (ImageView)view.findViewById(R.id.iv_release_goods);
-        IvCar = (ImageView)view.findViewById(R.id.iv_release_car);
-        IvPet = (ImageView)view.findViewById(R.id.iv_release_pet);
-        IvTenement.setOnClickListener(this);
-        IvRecruit.setOnClickListener(this);
-        IvCurriculum.setOnClickListener(this);
-        IvGoods.setOnClickListener(this);
-        IvCar.setOnClickListener(this);
-        IvPet.setOnClickListener(this);
-    }
-
-    @Override
+//    @Override
+    @OnClick({R.id.iv_release_tenement,R.id.iv_release_recruit,R.id.iv_release_curriculum_vitae,
+            R.id.iv_release_goods,R.id.iv_release_car,R.id.iv_release_pet})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_release_tenement:

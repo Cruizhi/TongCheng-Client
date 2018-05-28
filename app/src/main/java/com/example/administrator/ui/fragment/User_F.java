@@ -1,4 +1,4 @@
-package com.example.administrator.tongcheng;
+package com.example.administrator.ui.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,9 +14,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.administrator.activity.Login;
-import com.example.administrator.activity.Setting;
-import com.example.administrator.activity.UserDetail;
+import com.example.administrator.ui.activity.Setting;
+import com.example.administrator.ui.activity.UserDetail;
+import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.L;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.mob.tools.utils.DeviceHelper.getApplication;
 
@@ -26,15 +31,24 @@ import static com.mob.tools.utils.DeviceHelper.getApplication;
 
 public class User_F extends Fragment implements View.OnClickListener{
 
-    private RelativeLayout RlHead;
-    private Button BtnSetting;
-    private ImageView IvIndent;
-    private ImageView IvDeliery;
-    private ImageView IvEvaluate;
-    private ImageView IvRelease;
-    private ImageView IvCollection;
-    private TextView TvUsername;
-    private TextView TvUserphone;
+    @BindView(R.id.rl_user_top)
+    RelativeLayout RlHead;
+    @BindView(R.id.btn_user_setting)
+    Button BtnSetting;
+    @BindView(R.id.iv_user_indent)
+    ImageView IvIndent;
+    @BindView(R.id.iv_user_delivery)
+    ImageView IvDeliery;
+    @BindView(R.id.iv_user_evaluate)
+    ImageView IvEvaluate;
+    @BindView(R.id.iv_user_release)
+    ImageView IvRelease;
+    @BindView(R.id.iv_user_collection)
+    ImageView IvCollection;
+    @BindView(R.id.tv_user_username)
+    TextView TvUsername;
+    @BindView(R.id.tv_user_userphone)
+    TextView TvUserphone;
 
     //当前用户信息
     private String userid;
@@ -51,6 +65,8 @@ public class User_F extends Fragment implements View.OnClickListener{
                 LinearLayout.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(lp);
 
+        ButterKnife.bind(this,view);
+
         getuserinfo();  //获取当前用户信息
         init(view);  //初始化设置
         L.i_crz("User_F--onCreateView");
@@ -66,22 +82,6 @@ public class User_F extends Fragment implements View.OnClickListener{
     }
 
     private void init(View view){
-        RlHead = (RelativeLayout)view.findViewById(R.id.rl_user_top);
-        BtnSetting = (Button)view.findViewById(R.id.btn_user_setting);
-        IvCollection = (ImageView) view.findViewById(R.id.iv_user_collection);
-        IvDeliery = (ImageView)view.findViewById(R.id.iv_user_delivery);
-        IvIndent = (ImageView)view.findViewById(R.id.iv_user_indent);
-        IvEvaluate = (ImageView)view.findViewById(R.id.iv_user_evaluate);
-        IvRelease = (ImageView)view.findViewById(R.id.iv_user_release);
-        TvUsername = (TextView)view.findViewById(R.id.tv_user_username);
-        TvUserphone = (TextView)view.findViewById(R.id.tv_user_userphone);
-        IvCollection.setOnClickListener(this);
-        IvDeliery.setOnClickListener(this);
-        IvRelease.setOnClickListener(this);
-        IvIndent.setOnClickListener(this);
-        IvEvaluate.setOnClickListener(this);
-        BtnSetting.setOnClickListener(this);
-        RlHead.setOnClickListener(this);
 
         if(userid != null && !"".equals(userid)){
             TvUsername.setText("用户名:" + username);
@@ -92,7 +92,9 @@ public class User_F extends Fragment implements View.OnClickListener{
         }
     }
 
-    @Override
+//    @Override
+    @OnClick({R.id.iv_user_collection,R.id.iv_user_release,R.id.iv_user_evaluate,R.id.iv_user_delivery,
+    R.id.iv_user_indent,R.id.rl_user_top,R.id.btn_user_setting})
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.rl_user_top:

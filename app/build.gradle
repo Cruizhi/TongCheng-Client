@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 // 添加插件
 apply plugin: 'com.mob.sdk'
 
+//添加插件
+apply plugin: 'com.jakewharton.butterknife'
+
 // 在MobSDK的扩展中注册SMSSDK的相关信息
 MobSDK {
     appKey "242be20e2bc6a"
@@ -54,6 +57,17 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':IMKit')
     compile project(':IMLib')
+    compile project(':okhttputils')
     compile files('libs/AMap_Location_V3.7.0_20171218.jar')
+
+    //加载图片
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.google.code.gson:gson:2.3.1'
+
+    //简化绑定控件
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //下拉刷新控件
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
 }

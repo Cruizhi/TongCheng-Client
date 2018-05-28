@@ -25,41 +25,58 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.administrator.http.UploadByServlet;
 import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.L;
-import com.example.administrator.utils.ThreadPoolManager;
 import com.example.administrator.utils.UUIDUtil;
 import com.example.administrator.utils.UploadTask;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.builder.PostFormBuilder;
+import com.zhy.http.okhttp.callback.StringCallback;
+import com.zhy.http.okhttp.request.RequestCall;
 
-import org.apache.http.message.BasicNameValuePair;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.Call;
+
+import static com.example.administrator.http.UploadByServlet.getUrl;
 
 /**
  * Created by Administrator on 2018/3/30.
  */
 
-public class BusinessRelease extends Activity implements View.OnClickListener{
+public class BusinessRelease extends Activity{
 
     private String url = "Business";
 
-    private GridView GvAddPic;  //网格显示缩略图
     private final int IMAGE_OPEN = 1;  //打开图片标记
     private String pathImage;  //选择图片路径
     private Bitmap bmp;  //导入临时缩略图
     private ArrayList<HashMap<String,Object>> imageItem;
     private SimpleAdapter simpleAdapter;  //图片适配器
 
-    private EditText EtContent;
-    private EditText EtTitle;
-    private Spinner SpAssortment;
-    private EditText EtPrice;
-    private EditText EtLinkPhone;
-    private Button BtBack;
-    private Button BtSubmit;
+    @BindView(R.id.gv_business_addpic)
+    GridView GvAddPic;  //网格显示缩略图
+    @BindView(R.id.et_business_content)
+    EditText EtContent;
+    @BindView(R.id.et_business_title)
+    EditText EtTitle;
+    @BindView(R.id.sp_business_assortment)
+    Spinner SpAssortment;
+    @BindView(R.id.et_business_price)
+    EditText EtPrice;
+    @BindView(R.id.et_business_linkphone)
+    EditText EtLinkPhone;
+    @BindView(R.id.btn_business_back)
+    Button BtBack;
+    @BindView(R.id.btn_business_submit)
+    Button BtSubmit;
 
     private List<String> list;
     private String uploadFile = "";
@@ -68,6 +85,9 @@ public class BusinessRelease extends Activity implements View.OnClickListener{
     private String city;
     private String userid;
     private String usertoken;
+    private String username;
+    private File[] file = new File[8];
+    private List<File> lfile = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -77,7 +97,7 @@ public class BusinessRelease extends Activity implements View.OnClickListener{
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         list = new ArrayList<>();
-        init();
+        ButterKnife.bind(this);
         getUserInfo();
         Addpic();  //添加图片
         initClick();
@@ -93,15 +113,13 @@ public class BusinessRelease extends Activity implements View.OnClickListener{
         EtLinkPhone = (EditText)findViewById(R.id.et_business_linkphone);
         BtBack = (Button)findViewById(R.id.btn_business_back);
         BtSubmit = (Button)findViewById(R.id.btn_business_submit);
-        BtSubmit.setOnClickListener(this);
-        BtBack.setOnClickListener(this);
     }
 
     private void getUserInfo(){
         SharedPreferences shareP = getSharedPreferences("userinfo",MODE_PRIVATE);
         userid = shareP.getString("phone","");
         usertoken= shareP.getString("token","");
-
+        username = shareP.getString("username","");
     }
 
     private void Addpic(){
@@ -244,40 +262,109 @@ public class BusinessRelease extends Activity implements View.OnClickListener{
         builder.show();
     }
 
-    @Override
+//    @Override
+    @OnClick({R.id.btn_business_submit,R.id.btn_business_back})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_business_submit:
-                UpLoadPics();
+//                UpLoadPics();
+
                 city = getCity();
                 final String assortment = SpAssortment.getSelectedItem().toString();
-                ThreadPoolManager.getInstance().addTask(new Runnable() {
+                for(int i = 0;i < list.size();i++){
+                    uploadFile = list.get(i);
+                    newfilename[i] = "img"+i+"_"+randomnum+".jpg";
+                    L.i_crz("Personal--UploadPics:"+uploadFile+"newfilename:"+newfilename[i]);
+                    if(uploadFile != null && uploadFile.length() > 0){
+                        file[i+1] = new File(uploadFile);
+                        L.i_crz("Personal--file:"+file[i+1]);
+                        lfile.add(file[i+1]);
+                    }
+                }
+                Map<String, String> params = new HashMap<>();
+                params.put("userid",userid);
+                params.put("token",usertoken);
+                params.put("username",username);
+                params.put("title",EtTitle.getText().toString());
+                params.put("content",EtContent.getText().toString());
+                params.put("price",EtPrice.getText().toString());
+                params.put("assortment",assortment);
+                params.put("city",city);
+                params.put("pic0",newfilename[0]);
+                params.put("pic1",newfilename[1]);
+                params.put("pic2",newfilename[2]);
+                params.put("pic3",newfilename[3]);
+                params.put("pic4",newfilename[4]);
+                params.put("pic5",newfilename[5]);
+                params.put("pic6",newfilename[6]);
+
+                PostFormBuilder post = OkHttpUtils.post();
+                post.url(getUrl()+"ReceiveImages");
+                for (int i = 0;i<lfile.size();i++){
+                    post.addFile("mFile", newfilename[i], file[i+1]);
+                }
+                RequestCall build1 = post.build();
+                build1.execute(new StringCallback() {
                     @Override
-                    public void run() {
-                        BasicNameValuePair bnvp0 = new BasicNameValuePair("userid",userid);
-                        BasicNameValuePair bnvp1 = new BasicNameValuePair("token",usertoken);
-                        BasicNameValuePair bnvp2 = new BasicNameValuePair("title",EtTitle.getText().toString());
-                        BasicNameValuePair bnvp3 = new BasicNameValuePair("content",EtContent.getText().toString());
-                        BasicNameValuePair bnvp4 = new BasicNameValuePair("price",EtPrice.getText().toString());
-                        BasicNameValuePair bnvp5 = new BasicNameValuePair("assortment",assortment);
-                        BasicNameValuePair bnvp6 = new BasicNameValuePair("linkphone",EtLinkPhone.getText().toString());
-                        BasicNameValuePair bnvp7 = new BasicNameValuePair("city",city);
-                        BasicNameValuePair bnvp8 = new BasicNameValuePair("pic0",newfilename[0]);
-                        BasicNameValuePair bnvp9 = new BasicNameValuePair("pic1",newfilename[1]);
-                        BasicNameValuePair bnvp10 = new BasicNameValuePair("pic2",newfilename[2]);
-                        BasicNameValuePair bnvp11 = new BasicNameValuePair("pic3",newfilename[3]);
-                        BasicNameValuePair bnvp12 = new BasicNameValuePair("pic4",newfilename[4]);
-                        BasicNameValuePair bnvp13 = new BasicNameValuePair("pic5",newfilename[5]);
-                        BasicNameValuePair bnvp14 = new BasicNameValuePair("pic6",newfilename[6]);
-                        String response = UploadByServlet.post(url,bnvp0,bnvp1,bnvp2,bnvp3,bnvp4,bnvp5,
-                                bnvp6,bnvp7,bnvp8,bnvp9,bnvp10,bnvp11,bnvp12,bnvp13,bnvp14);
-                        Message msg = new Message();
-                        msg.what = 2;
-                        msg.obj = response;
-                        handler.sendMessage(msg);
-                        L.i_crz("Business--ThreadPoolManager--reponse:"+response);
+                    public void onError(Call call, Exception e, int id) {
+                        L.e_crz("Business--onError:"+e);
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        L.i_crz("success upload"+response);
                     }
                 });
+
+                OkHttpUtils
+                        .post()
+                        .params(params)
+                        .url(getUrl()+url)
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                L.e_crz("Business--params--onError:"+e);
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                if(response.equals("true")){
+                                    Toast.makeText(BusinessRelease.this,"发布成功",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(BusinessRelease.this,"发布失败，请检查网络或是否登录",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+
+//                ThreadPoolManager.getInstance().addTask(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        BasicNameValuePair bnvp0 = new BasicNameValuePair("userid",userid);
+//                        BasicNameValuePair bnvp1 = new BasicNameValuePair("token",usertoken);
+//                        BasicNameValuePair bnvp2 = new BasicNameValuePair("title",EtTitle.getText().toString());
+//                        BasicNameValuePair bnvp3 = new BasicNameValuePair("content",EtContent.getText().toString());
+//                        BasicNameValuePair bnvp4 = new BasicNameValuePair("price",EtPrice.getText().toString());
+//                        BasicNameValuePair bnvp5 = new BasicNameValuePair("assortment",assortment);
+//                        BasicNameValuePair bnvp6 = new BasicNameValuePair("linkphone",EtLinkPhone.getText().toString());
+//                        BasicNameValuePair bnvp7 = new BasicNameValuePair("city",city);
+//                        BasicNameValuePair bnvp8 = new BasicNameValuePair("pic0",newfilename[0]);
+//                        BasicNameValuePair bnvp9 = new BasicNameValuePair("pic1",newfilename[1]);
+//                        BasicNameValuePair bnvp10 = new BasicNameValuePair("pic2",newfilename[2]);
+//                        BasicNameValuePair bnvp11 = new BasicNameValuePair("pic3",newfilename[3]);
+//                        BasicNameValuePair bnvp12 = new BasicNameValuePair("pic4",newfilename[4]);
+//                        BasicNameValuePair bnvp13 = new BasicNameValuePair("pic5",newfilename[5]);
+//                        BasicNameValuePair bnvp14 = new BasicNameValuePair("pic6",newfilename[6]);
+//                        String response = UploadByServlet.post(url,bnvp0,bnvp1,bnvp2,bnvp3,bnvp4,bnvp5,
+//                                bnvp6,bnvp7,bnvp8,bnvp9,bnvp10,bnvp11,bnvp12,bnvp13,bnvp14);
+//                        Message msg = new Message();
+//                        msg.what = 2;
+//                        msg.obj = response;
+//                        handler.sendMessage(msg);
+//                        L.i_crz("Business--ThreadPoolManager--reponse:"+response);
+//                    }
+//                });
                 break;
             case R.id.btn_business_back:
                 finish();

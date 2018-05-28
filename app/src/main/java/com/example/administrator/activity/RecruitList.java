@@ -11,14 +11,20 @@ import android.widget.ListView;
 
 import com.example.administrator.adapter.RecruitAdapter;
 import com.example.administrator.bean.Recruit;
-import com.example.administrator.http.ReceiveByServlet;
+import com.example.administrator.http.ListRecruitCallback;
 import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.L;
-import com.example.administrator.utils.ThreadPoolManager;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import okhttp3.Call;
+
+import static com.example.administrator.http.UploadByServlet.getUrl;
 
 /**
  * Created by Administrator on 2018/4/14.
@@ -26,37 +32,64 @@ import java.util.List;
 
 public class RecruitList extends Activity {
 
-    private ListView LvRecruitList;
+    @BindView(R.id.lv_recruit_list)
+    ListView LvRecruitList;
 
     private RecruitAdapter myAdapter;
     private List<Recruit> recruitList;
+
+    private String url = "RecruitList";
 
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_recruitlist);
 
+        ButterKnife.bind(this);
         init();
         getRecruitData();
     }
 
     private void getRecruitData(){
         recruitList = new ArrayList<Recruit>();
-        ThreadPoolManager.getInstance().addTask(new Runnable() {
-            @Override
-            public void run() {
-                recruitList = new ReceiveByServlet().getRecruitList();
-                L.i_crz("getRecruitList size is:"+recruitList.size());
-                Message msg = new Message();
-                msg.obj = recruitList;
-                handler.sendMessage(msg);
-            }
-        });
+
+        OkHttpUtils
+                .post()
+                .url(getUrl()+url)
+                .build()
+                .execute(new ListRecruitCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        L.e_crz("RecruitList--onError"+e);
+                    }
+
+                    @Override
+                    public void onResponse(List<Recruit> response, int id) {
+                        recruitList = response;
+                        if(recruitList == null){
+                            L.i_crz("RecruitList--recruitlist is null");
+                            return ;
+                        }
+                        myAdapter = new RecruitAdapter(RecruitList.this,recruitList);
+                        LvRecruitList.setAdapter(myAdapter);
+                    }
+                });
+
+//        ThreadPoolManager.getInstance().addTask(new Runnable() {
+//            @Override
+//            public void run() {
+//                recruitList = new ReceiveByServlet().getRecruitList();
+//                L.i_crz("getRecruitList size is:"+recruitList);
+//                Message msg = new Message();
+//                msg.obj = recruitList;
+//                handler.sendMessage(msg);
+//            }
+//        });
 
     }
 
     private void init(){
-        LvRecruitList = (ListView)findViewById(R.id.lv_recruit_list);
+
         LvRecruitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

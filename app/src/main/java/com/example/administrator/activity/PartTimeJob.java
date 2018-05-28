@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.Button;
@@ -17,39 +15,70 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.http.UploadByServlet;
 import com.example.administrator.tongcheng.R;
+import com.example.administrator.utils.L;
 import com.example.administrator.utils.RegionUtils;
-import com.example.administrator.utils.ThreadPoolManager;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.apache.http.message.BasicNameValuePair;
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.Call;
+
+import static com.example.administrator.http.UploadByServlet.getUrl;
 
 /**
  * Created by Administrator on 2018/3/22.
  */
 
-public class PartTimeJob extends Activity implements View.OnClickListener{
+public class PartTimeJob extends Activity{
 
     private String url = "PartTimeJob";
 
-    private EditText EtName;  //兼职名称
-    private EditText EtType;  //兼职类型
-    private EditText EtNum;  //兼职人数
-    private RadioButton RbLongtime,RbShorttime;  //兼职时效
-    private RadioGroup RgPeriod;  //时间段
-    private RadioButton RbChoose,RbArbitrariness;  //兼职时段
-    private LinearLayout LlPeriod;  //是否显示选择时段
-    private EditText EtPeriod;  //选择时段
-    private EditText EtWages;  //资薪
-    private Spinner SpPayroll;  //结薪方式
-    private LinearLayout LlAddress;  //地址选择按钮
-    private TextView TvAddress;  //详细地址
-    private EditText EtContent;  //工作内容
-    private EditText EtLinkman;  //联系内容
-    private EditText EtLinkphone;  //联系电话
-    private EditText Etcompany;  //公司名称
-    private Button BtCancel;  //取消按钮
-    private Button BtSubmit;  //提交按钮
+    @BindView(R.id.et_parttime_name)
+    EditText EtName;  //兼职名称
+    @BindView(R.id.et_parttime_type)
+    EditText EtType;  //兼职类型
+    @BindView(R.id.et_parttime_num)
+    EditText EtNum;  //兼职人数
+    @BindView(R.id.rb_parttime_long)
+    RadioButton RbLongtime;  //兼职时效
+    @BindView(R.id.rb_parttime_short)
+    RadioButton RbShorttime;
+    @BindView(R.id.rg_parttime_period)
+    RadioGroup RgPeriod;  //时间段
+    @BindView(R.id.rb_parttime_choose)
+    RadioButton RbChoose;  //兼职时段
+    @BindView(R.id.rb_parttime_arbitrariness)
+    RadioButton RbArbitrariness;
+    @BindView(R.id.ll_parttime_periode)
+    LinearLayout LlPeriod;  //是否显示选择时段
+    @BindView(R.id.et_parttime_periode)
+    EditText EtPeriod;  //选择时段
+    @BindView(R.id.et_parttime_wages)
+    EditText EtWages;  //资薪
+    @BindView(R.id.sp_parttime_payroll)
+    Spinner SpPayroll;  //结薪方式
+    @BindView(R.id.ll_parttime_address)
+    LinearLayout LlAddress;  //地址选择按钮
+    @BindView(R.id.tv_parttime_address)
+    TextView TvAddress;  //详细地址
+    @BindView(R.id.et_business_content)
+    EditText EtContent;  //工作内容
+    @BindView(R.id.et_parttime_linkman)
+    EditText EtLinkman;  //联系内容
+    @BindView(R.id.et_parttime_linkphone)
+    EditText EtLinkphone;  //联系电话
+    @BindView(R.id.et_parttime_company)
+    EditText Etcompany;  //公司名称
+    @BindView(R.id.btn_parttime_cancel)
+    Button BtCancel;  //取消按钮
+    @BindView(R.id.btn_parttime_submit)
+    Button BtSubmit;  //提交按钮
 
     private String Type = "parttime";
     private String Duration;  //时效
@@ -62,6 +91,7 @@ public class PartTimeJob extends Activity implements View.OnClickListener{
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_parttime_release);
 
+        ButterKnife.bind(this);
         getuserinfo();
         init();
         initClick();
@@ -74,29 +104,7 @@ public class PartTimeJob extends Activity implements View.OnClickListener{
     }
 
     private void init(){
-        EtName = (EditText)findViewById(R.id.et_parttime_name);
-        EtType = (EditText)findViewById(R.id.et_parttime_type);
-        EtNum = (EditText)findViewById(R.id.et_parttime_num);
-        RbLongtime = (RadioButton)findViewById(R.id.rb_parttime_long);
-        RbShorttime = (RadioButton)findViewById(R.id.rb_parttime_short);
-        RgPeriod = (RadioGroup)findViewById(R.id.rg_parttime_period);
-        RbChoose = (RadioButton)findViewById(R.id.rb_parttime_choose);
-        RbArbitrariness = (RadioButton)findViewById(R.id.rb_parttime_arbitrariness);
-        LlPeriod = (LinearLayout)findViewById(R.id.ll_parttime_periode);
-        EtPeriod = (EditText)findViewById(R.id.et_parttime_periode);
-        EtWages = (EditText)findViewById(R.id.et_parttime_wages);
-        SpPayroll = (Spinner)findViewById(R.id.sp_parttime_payroll);
-        LlAddress = (LinearLayout)findViewById(R.id.ll_parttime_address);
-        TvAddress = (TextView)findViewById(R.id.tv_parttime_address);
-        EtContent = (EditText)findViewById(R.id.et_parttime_content);
-        EtLinkman = (EditText)findViewById(R.id.et_parttime_linkman);
-        EtLinkphone = (EditText)findViewById(R.id.et_parttime_linkphone);
-        Etcompany = (EditText)findViewById(R.id.et_parttime_company);
-        BtCancel = (Button)findViewById(R.id.btn_parttime_cancel);
-        BtSubmit = (Button)findViewById(R.id.btn_parttime_submit);
-        LlAddress.setOnClickListener(this);
-        BtCancel.setOnClickListener(this);
-        BtSubmit.setOnClickListener(this);
+
     }
 
     private void initClick(){
@@ -115,7 +123,8 @@ public class PartTimeJob extends Activity implements View.OnClickListener{
 
     }
 
-    @Override
+//    @Override
+    @OnClick({ R.id.ll_parttime_address,R.id.btn_parttime_cancel,R.id.btn_parttime_submit})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_parttime_address:
@@ -137,31 +146,68 @@ public class PartTimeJob extends Activity implements View.OnClickListener{
                 }else {
                     Period = EtPeriod.getText().toString();
                 }
-                ThreadPoolManager.getInstance().addTask(new Runnable() {
-                    @Override
-                    public void run() {
-                        BasicNameValuePair bnvp0 = new BasicNameValuePair("recruittype",Type);
-                        BasicNameValuePair bnvp1 = new BasicNameValuePair("type",EtType.getText().toString());
-                        BasicNameValuePair bnvp2 = new BasicNameValuePair("name",EtName.getText().toString());
-                        BasicNameValuePair bnvp3 = new BasicNameValuePair("num",EtNum.getText().toString());
-                        BasicNameValuePair bnvp4 = new BasicNameValuePair("duration",Duration);
-                        BasicNameValuePair bnvp5 = new BasicNameValuePair("period",Period);
-                        BasicNameValuePair bnvp6 = new BasicNameValuePair("wages",EtWages.getText().toString());
-                        BasicNameValuePair bnvp7 = new BasicNameValuePair("payroll",payroll);
-                        BasicNameValuePair bnvp8 = new BasicNameValuePair("address",TvAddress.getText().toString());
-                        BasicNameValuePair bnvp9 = new BasicNameValuePair("content",EtContent.getText().toString());
-                        BasicNameValuePair bnvp10 = new BasicNameValuePair("linkman",EtLinkman.getText().toString());
-                        BasicNameValuePair bnvp11 = new BasicNameValuePair("linkphone",EtLinkphone.getText().toString());
-                        BasicNameValuePair bnvp12 = new BasicNameValuePair("company",Etcompany.getText().toString());
-                        BasicNameValuePair bnvp13 = new BasicNameValuePair("userid",userid);
-                        BasicNameValuePair bnvp14 = new BasicNameValuePair("usertoken",usertoken);
-                        String response = UploadByServlet.post(url,bnvp0,bnvp1,bnvp2,bnvp3,bnvp4,bnvp5,bnvp6,
-                                bnvp7,bnvp8,bnvp9,bnvp10,bnvp11,bnvp12,bnvp13,bnvp14);
-                        Message msg = new Message();
-                        msg.obj = response;
-                        handler.sendMessage(msg);
-                    }
-                });
+
+                Map<String, String> params = new HashMap<>();
+                params.put("recruittype",Type);
+                params.put("name", EtName.getText().toString());
+                params.put("type",EtType.getText().toString());
+                params.put("num",EtNum.getText().toString());
+                params.put("duration",Duration);
+                params.put("period",Period);
+                params.put("wages",EtWages.getText().toString());
+                params.put("payroll",payroll);
+                params.put("content",EtContent.getText().toString());
+                params.put("linkman",EtLinkman.getText().toString());
+                params.put("linkphone",EtLinkphone.getText().toString());
+                params.put("address",TvAddress.getText().toString());
+                params.put("userid",userid);
+                params.put("usertoken",usertoken);
+                params.put("company",Etcompany.getText().toString());
+                OkHttpUtils.post()//
+                        .url(getUrl()+url)//
+                        .params(params)//
+                        .build()//
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                                L.i_crz("PartTime--submit:"+e);
+                            }
+
+                            @Override
+                            public void onResponse(String response, int id) {
+                                if(response.equals("true")){
+                                    Toast.makeText(PartTimeJob.this,"发布成功",Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(PartTimeJob.this, "发布失败，请重新发布", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+//                ThreadPoolManager.getInstance().addTask(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        BasicNameValuePair bnvp0 = new BasicNameValuePair("recruittype",Type);
+//                        BasicNameValuePair bnvp1 = new BasicNameValuePair("type",EtType.getText().toString());
+//                        BasicNameValuePair bnvp2 = new BasicNameValuePair("name",EtName.getText().toString());
+//                        BasicNameValuePair bnvp3 = new BasicNameValuePair("num",EtNum.getText().toString());
+//                        BasicNameValuePair bnvp4 = new BasicNameValuePair("duration",Duration);
+//                        BasicNameValuePair bnvp5 = new BasicNameValuePair("period",Period);
+//                        BasicNameValuePair bnvp6 = new BasicNameValuePair("wages",EtWages.getText().toString());
+//                        BasicNameValuePair bnvp7 = new BasicNameValuePair("payroll",payroll);
+//                        BasicNameValuePair bnvp8 = new BasicNameValuePair("address",TvAddress.getText().toString());
+//                        BasicNameValuePair bnvp9 = new BasicNameValuePair("content",EtContent.getText().toString());
+//                        BasicNameValuePair bnvp10 = new BasicNameValuePair("linkman",EtLinkman.getText().toString());
+//                        BasicNameValuePair bnvp11 = new BasicNameValuePair("linkphone",EtLinkphone.getText().toString());
+//                        BasicNameValuePair bnvp12 = new BasicNameValuePair("company",Etcompany.getText().toString());
+//                        BasicNameValuePair bnvp13 = new BasicNameValuePair("userid",userid);
+//                        BasicNameValuePair bnvp14 = new BasicNameValuePair("usertoken",usertoken);
+//                        String response = UploadByServlet.post(url,bnvp0,bnvp1,bnvp2,bnvp3,bnvp4,bnvp5,bnvp6,
+//                                bnvp7,bnvp8,bnvp9,bnvp10,bnvp11,bnvp12,bnvp13,bnvp14);
+//                        Message msg = new Message();
+//                        msg.obj = response;
+//                        handler.sendMessage(msg);
+//                    }
+//                });
                 break;
             default:
                 break;
@@ -182,15 +228,4 @@ public class PartTimeJob extends Activity implements View.OnClickListener{
         }
     }
 
-
-    private Handler handler = new Handler(){
-        public void handleMessage(Message msg){
-            String response = (String)msg.obj;
-            if(response.equals("true")){
-                Toast.makeText(PartTimeJob.this,"发布成功",Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(PartTimeJob.this,"发布失败，请重新发布",Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 }

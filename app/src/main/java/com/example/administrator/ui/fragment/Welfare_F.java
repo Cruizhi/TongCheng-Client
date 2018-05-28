@@ -1,4 +1,4 @@
-package com.example.administrator.tongcheng;
+package com.example.administrator.ui.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -8,23 +8,27 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.administrator.adapter.WelfareAdapter;
+import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Administrator on 2018/3/24.
  */
 
-public class Welfare_F extends DialogFragment implements View.OnClickListener {
+public class Welfare_F extends DialogFragment{
 
-    private GridView GvWelfare;
-    private Button BtSubmit;
+    @BindView(R.id.gv_welfare_welfare)
+    GridView GvWelfare;
 
     private String[] welfare = {"五险一金","包吃","包住","周末双休","年底双薪","房补","饭补","交通补助"};
     private String allwelfare = "";
@@ -77,6 +81,8 @@ public class Welfare_F extends DialogFragment implements View.OnClickListener {
         params.height = getActivity().getWindowManager().getDefaultDisplay().getHeight() * 3 / 5;
         window.setAttributes(params);
 
+        ButterKnife.bind(this,dialog);
+
         init(dialog);
 
         return dialog;
@@ -106,8 +112,6 @@ public class Welfare_F extends DialogFragment implements View.OnClickListener {
             }
         });
 
-        BtSubmit = (Button)dialog.findViewById(R.id.btn_welfare_submit);
-        BtSubmit.setOnClickListener(this);
     }
 
     @Override
@@ -116,7 +120,8 @@ public class Welfare_F extends DialogFragment implements View.OnClickListener {
 
     }
 
-    @Override
+//    @Override
+    @OnClick(R.id.btn_welfare_submit)
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_welfare_submit:

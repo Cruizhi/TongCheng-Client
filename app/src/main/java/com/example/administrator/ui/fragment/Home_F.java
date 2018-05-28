@@ -1,4 +1,4 @@
-package com.example.administrator.tongcheng;
+package com.example.administrator.ui.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,11 +19,12 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.example.administrator.activity.ChooseCity;
+import com.example.administrator.ui.activity.ChooseCity;
 import com.example.administrator.activity.GoodsList;
 import com.example.administrator.activity.RecruitList;
 import com.example.administrator.adapter.CarouselAdapter;
 import com.example.administrator.http.UploadByServlet;
+import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.ThreadPoolManager;
 import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.RollPagerView;
@@ -32,6 +33,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imageloader.utils.L;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -40,7 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Administrator on 2018/2/2.
  */
 
-public class Home_F extends Fragment implements View.OnClickListener,AMapLocationListener{
+public class Home_F extends Fragment implements AMapLocationListener{
 //    public static Home_F instance = null;
 //
 //    public static Home_F getInstance(){
@@ -71,17 +75,23 @@ public class Home_F extends Fragment implements View.OnClickListener,AMapLocatio
 //    }
 
 
-    private TextView TvCity;  //当前城市
-    private RollPagerView rollPagerView;   //首页旋转图片的框架
     public AMapLocationClient mLocationClient = null;
     public AMapLocationClientOption mLocationOption = null;
 
-    private ImageView IvRecruit;
-    private ImageView IvGoods;
-    private ImageView IvTenement;
-    private ImageView IvPet;
-    private ImageView IvCar;
-
+    @BindView(R.id.tv_top_city)
+    TextView TvCity;  //当前城市
+    @BindView(R.id.rpv_home_carousel)
+    RollPagerView rollPagerView;   //首页旋转图片的框架
+    @BindView(R.id.iv_home_recruit)
+    ImageView IvRecruit;
+    @BindView(R.id.iv_home_goods)
+    ImageView IvGoods;
+    @BindView(R.id.iv_home_tenement)
+    ImageView IvTenement;
+    @BindView(R.id.iv_home_pet)
+    ImageView IvPet;
+    @BindView(R.id.iv_home_car)
+    ImageView IvCar;
 
     private String[] pic_url = new String[5];   //旋转图片的网络地址
 
@@ -96,6 +106,8 @@ public class Home_F extends Fragment implements View.OnClickListener,AMapLocatio
                 LinearLayout.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(lp);
 
+        ButterKnife.bind(this,view);
+
         ThreadPoolManager.getInstance().addTask(new Runnable() {
             @Override
             public void run() {
@@ -107,7 +119,7 @@ public class Home_F extends Fragment implements View.OnClickListener,AMapLocatio
             }
         });
 
-        init(view);  //初始化设置
+
         initLocation();
         com.example.administrator.utils.L.i_crz("Home_F--onCreateView");
         onRPVClick();   //旋转图片点击事件
@@ -117,23 +129,6 @@ public class Home_F extends Fragment implements View.OnClickListener,AMapLocatio
 
         return view;
 
-    }
-
-    private void init(View view){
-        TvCity = (TextView)view.findViewById(R.id.tv_top_city);
-        rollPagerView = (RollPagerView)view.findViewById(R.id.rpv_home_carousel);
-        TvCity.setOnClickListener(this);
-
-        IvCar = (ImageView)view.findViewById(R.id.iv_home_car);
-        IvTenement = (ImageView)view.findViewById(R.id.iv_home_tenement);
-        IvGoods = (ImageView)view.findViewById(R.id.iv_home_goods);
-        IvRecruit = (ImageView)view.findViewById(R.id.iv_home_recruit);
-        IvPet = (ImageView)view.findViewById(R.id.iv_home_pet);
-        IvCar.setOnClickListener(this);
-        IvTenement.setOnClickListener(this);
-        IvGoods.setOnClickListener(this);
-        IvPet.setOnClickListener(this);
-        IvRecruit.setOnClickListener(this);
     }
 
     private void initLocation(){
@@ -153,7 +148,7 @@ public class Home_F extends Fragment implements View.OnClickListener,AMapLocatio
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);
         //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(2000);
+        mLocationOption.setInterval(200000);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
@@ -161,7 +156,9 @@ public class Home_F extends Fragment implements View.OnClickListener,AMapLocatio
         com.example.administrator.utils.L.i_crz("initLocation()");
     }
 
-    @Override
+//    @Override
+    @OnClick({R.id.tv_top_city,R.id.iv_home_goods,R.id.iv_home_recruit,R.id.iv_home_car,
+            R.id.iv_home_tenement,R.id.iv_home_pet})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_top_city:

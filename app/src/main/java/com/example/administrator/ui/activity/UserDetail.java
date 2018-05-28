@@ -1,4 +1,4 @@
-package com.example.administrator.activity;
+package com.example.administrator.ui.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,50 +28,47 @@ import com.example.administrator.widget.RoundImageView;
 
 import org.apache.http.message.BasicNameValuePair;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by Administrator on 2018/3/9.
  */
 
-public class UserDetail extends Activity implements View.OnClickListener{
+public class UserDetail extends Activity{
+
+    private String url = "UserHead";  //修改后端用户的头像
 
     private final int IMAGE_OPEN = 1;   //打开图片标记
     private String Imagepath;  //选择图片的路径
     private String uploadimage;   //修改的头像
-
-    private RelativeLayout RlHeadPhoto;
-
-    private RoundImageView IvHeadPhoto;  //显示用户头象
-
-    private Button BtBack;
-    private Button BtUsername;
-    private Button BtmyDelieryAddress;
-
     private String randomnum = UUIDUtil.getUUID();  //随机生成数字
     private String newfilename;  //上传图片的新名字
 
-    private String url = "UserHead";  //修改后端用户的头像
+    @BindView(R.id.rl_userdetail_head)
+    RelativeLayout RlHeadPhoto;
+    @BindView(R.id.riv_userdetail_head)
+    RoundImageView IvHeadPhoto;  //显示用户头象
+    @BindView(R.id.btn_userdetail_back)
+    Button BtBack;
+    @BindView(R.id.btn_userdetail_username)
+    Button BtUsername;
+    @BindView(R.id.btn_userdetail_mygoodsaddress)
+    Button BtmyDelieryAddress;
 
     @Override
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_userdetail);
 
-        init();
+        ButterKnife.bind(this);
+
     }
 
-    private void init(){
-        RlHeadPhoto = (RelativeLayout)findViewById(R.id.rl_userdetail_head);
-        BtBack = (Button)findViewById(R.id.btn_userdetail_back);
-        BtUsername = (Button)findViewById(R.id.btn_userdetail_username);
-        BtmyDelieryAddress = (Button)findViewById(R.id.btn_userdetail_mygoodsaddress);
-        IvHeadPhoto = (RoundImageView)findViewById(R.id.riv_userdetail_head);
-        RlHeadPhoto.setOnClickListener(this);
-        BtBack.setOnClickListener(this);
-        BtUsername.setOnClickListener(this);
-        BtmyDelieryAddress.setOnClickListener(this);
-    }
-
-    @Override
+//    @Override
+    @OnClick({R.id.rl_userdetail_head,R.id.btn_userdetail_back,R.id.btn_userdetail_mygoodsaddress,
+            R.id.btn_userdetail_username})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_userdetail_head:

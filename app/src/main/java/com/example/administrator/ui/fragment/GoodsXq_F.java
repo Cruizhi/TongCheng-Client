@@ -1,4 +1,4 @@
-package com.example.administrator.tongcheng;
+package com.example.administrator.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,10 +9,14 @@ import android.widget.ListView;
 
 import com.example.administrator.adapter.GoodsXqAdapter;
 import com.example.administrator.bean.Goods;
+import com.example.administrator.tongcheng.R;
 import com.example.administrator.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.example.administrator.http.UploadByServlet.getUrl;
 
@@ -22,7 +26,8 @@ import static com.example.administrator.http.UploadByServlet.getUrl;
 
 public class GoodsXq_F extends Fragment {
 
-    private ListView LvPics;
+    @BindView(R.id.lv_goods_pics)
+    ListView LvPics;
 
     private Goods TheGoods;
     private List<String> picsList = new ArrayList<String>();
@@ -34,13 +39,14 @@ public class GoodsXq_F extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
         View view = inflater.inflate(R.layout.fragment_goods_xq,container,false);
 
+        ButterKnife.bind(this,view);
+
         init(view);
 
         return view;
     }
 
     private void init(View view){
-        LvPics = (ListView)view.findViewById(R.id.lv_goods_pics);
 
         Bundle bundle = getActivity().getIntent().getExtras();
         TheGoods = (Goods)bundle.getSerializable("GoodsObj");
